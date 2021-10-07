@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TodoController extends Controller
 {
@@ -33,9 +35,29 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TodoRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'task' => [
+                'required',
+                Rule::unique('todos'),
+                'min:5',
+                'max:255',
+            ]
+        ],[
+            'task.unique' => 'The Task Must Be Unique'
+        ]);
+
+        
+
+        // $todo = Todo::create($request->array());
+        $todo = Todo::create([
+            'task' => $request->get('task')
+        ]);
+        if(empty($todo)){
+            return redirect()->back()->withInput();
+        }
+        return redirect()->route('todos.index')->with('SUCCESS',__("Todo Has Been Created Successfully"));
     }
 
     /**
