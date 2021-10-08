@@ -16,7 +16,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+        $data['list'] = Todo::all();
+        return view('todo.index',$data);
     }
 
     /**
@@ -79,7 +80,8 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        //
+        $data['todo'] = $todo;
+        return view("todos.edit", $data);
     }
 
     /**
@@ -89,7 +91,7 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Todo $todo)
+    public function update(TodoRequest $request, Todo $todo)
     {
         //
     }
@@ -102,6 +104,9 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
+        if($todo->delete()){
+            return redirect()->back()->with("SUCCESS", __("The Task Has Been Deleted"));
+        }
+            return redirect()->back()->with("ERROR", __("Failed To Delete"));
     }
 }

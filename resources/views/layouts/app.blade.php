@@ -31,6 +31,27 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <form id="delete-form" action="" method="post">
+                @csrf
+                <input type="hidden" name="_method" value="DELETE">
+            </form>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).on("click",".delete-row", function(e){
+                e.preventDefault();
+                // if(confirm("Are You Sure?")){
+                    let confirmStr = "Are You Sure?"
+                    if($(this).attr("data-confirm")){
+                        confirmStr = $(this).attr("data-confirm");
+                    }
+                if(confirm(confirmStr)){
+                    let href = $(this).attr("href");
+                    $("#delete-form").attr("action", href);
+                    $("#delete-form").submit();
+                }
+            })
+        </script>
     </body>
 </html>
