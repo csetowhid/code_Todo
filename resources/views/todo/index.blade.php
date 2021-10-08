@@ -37,9 +37,13 @@
                               @endif
                             </td>
                             <td class="px-4 py-3 text-sm border">
-                              <a class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm" href="{{route('todos.edit', $todo->id)}}">Edit</a>
-                              <a href="{{route('todos.destroy', $todo->id)}}" class="delete-row px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm" data-confirm="Are You Sure To Delete This?"> Delete </a>
+                              <a href="{{route('todos.edit', $todo->id)}}" class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm">Edit</a>
 
+                              @if(!$todo->is_complete)
+                              <a href="{{route('todos.complete', $todo->id)}}" class="complete-todo px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm" data-confirm="Are You Sure To Complete This?">Complete</a>
+                              @endif
+
+                              <a href="{{route('todos.destroy', $todo->id)}}" class="delete-row px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm" data-confirm="Are You Sure To Delete This?"> Delete </a>
                               {{-- <a href="posts/2" > --}}
                             </td>
                           </tr>

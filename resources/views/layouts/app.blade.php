@@ -27,6 +27,18 @@
                 </div>
             </header>
 
+            @if (session('SUCCESS'))
+            <div id="successMessage" class="px-4 py-2 m-4 max-w-3xl mx-auto text-center text-white border border-green-600 bg-green-600">
+                {{session('SUCCESS')}}
+            </div>
+            @endif
+
+            @if (session('ERROR'))
+            <div id="successMessage" class="px-4 py-2 m-4 max-w-3xl mx-auto text-center text-white border border-red-600 bg-red-600">
+                {{session('ERROR')}}
+            </div>
+            @endif
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}
@@ -34,7 +46,7 @@
 
             <form id="delete-form" action="" method="post">
                 @csrf
-                <input type="hidden" name="_method" value="DELETE">
+                <input id="method" type="hidden" name="_method" value="DELETE">
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -52,6 +64,25 @@
                     $("#delete-form").submit();
                 }
             })
+
+            $(document).on("click",".complete-todo", function(e){
+                e.preventDefault();
+                    let confirmStr = "Are You Sure?"
+                    if($(this).attr("data-confirm")){
+                        confirmStr = $(this).attr("data-confirm");
+                    }
+                if(confirm(confirmStr)){
+                    let href = $(this).attr("href");
+                    $("#method").attr("value", "PUT");
+                    $("#delete-form").attr("action", href);
+                    $("#delete-form").submit();
+                }
+            })
+
+
+            setTimeout(function() {
+                $('#successMessage').fadeOut('fast');
+                }, 2000); // <-- time in milliseconds
         </script>
     </body>
 </html>

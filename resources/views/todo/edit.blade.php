@@ -12,15 +12,7 @@
                     <form action="{{route('todos.update',$todo->id)}}" method="POST">
                     @csrf
                     @method("PUT")
-                    @include("todo._form")
-                    <div class="flex items-center justify-end mt-4">
-        
-                        <x-button class="ml-4 bg-green-600">
-                            {{ __('Update') }}
-                        </x-button>
-                    </div>
-
-
+                        @include("todo._form", ["buttonText" => __("Update")])
                     </form>
                 </div>
             </div>

@@ -62,14 +62,20 @@ class TodoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Complete the specified resource.
      *
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function show(Todo $todo)
+    public function complete(Todo $todo)
     {
-        //
+        $todo->forceFill([
+                "is_complete" => true
+        ]);
+        if($todo->update()){
+            return redirect()->route("todos.index")->with("SUCCESS", __("This Task Has Been Completed Successfully"));
+        }
+        return redirect()->back()->withInput("ERROR", __("Failed To Update"));
     }
 
     /**
@@ -81,7 +87,7 @@ class TodoController extends Controller
     public function edit(Todo $todo)
     {
         $data['todo'] = $todo;
-        return view("todos.edit", $data);
+        return view("todo.edit", $data);
     }
 
     /**
@@ -93,7 +99,12 @@ class TodoController extends Controller
      */
     public function update(TodoRequest $request, Todo $todo)
     {
-        //
+        if($todo->update([
+            "task" => $request->get("task")
+        ])){
+            return redirect()->route("todos.index")->with("SUCCESS", __("The Task Has Been Updated Successfully"));
+        }
+        return redirect()->back()->withInput("ERROR", __("Failed To Update"));
     }
 
     /**

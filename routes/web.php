@@ -25,4 +25,5 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
-Route::resource('todos', TodoController::class);
+Route::resource('todos', TodoController::class)->except("show");
+Route::put('todos/{todo}/complete', [TodoController::class,'complete'])->name("todos.complete");
