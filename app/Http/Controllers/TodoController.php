@@ -27,6 +27,9 @@ class TodoController extends Controller
         // dd($data['list']->toArray());
         // $data['list']->dd();
         // $data['list']->dump();
+        // $data['list'] = Todo::withTrashed()->paginate(2);
+        // $data['list'] = Todo::onlyTrashed()->paginate();
+
         $data['list'] = Todo::paginate(2);
         return view('todo.index',$data);
     }
@@ -49,12 +52,22 @@ class TodoController extends Controller
      */
     public function store(TodoRequest $request)
     {
-        $path = $request->file('image')->store('images/todos');
+        
         // if($request->hasFile('image')){
         //     $path = $request->file('image')->store('images/todos');
         // }
         
         // $todo = Todo::create($request->array());
+
+        /*---------------------------*/
+        // $todo = Todo::firstOrCreate([
+        //     'task' =>$request->get('task')
+        // ],
+        // [
+        //     'is_complete' =>true
+        // ]);
+        /*---------------------------*/
+        $path = $request->file('image')->store('images/todos');
         $todo = Todo::create([
             'task' => $request->get('task'),
             'image' => $path,
