@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoRequest;
+use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\store;
@@ -41,7 +42,8 @@ class TodoController extends Controller
      */
     public function create()
     {
-        return view('todo.create');
+        $data['categories'] = Category::pluck('name','id');
+        return view('todo.create', $data);
     }
 
     /**
@@ -69,13 +71,14 @@ class TodoController extends Controller
         /*---------------------------*/
         $path = $request->file('image')->store('images/todos');
         $todo = Todo::create([
+            'category_id' => $request->get('category_id'),
             'task' => $request->get('task'),
             'image' => $path,
         ]);
         if(empty($todo)){
             return redirect()->back()->withInput();
         }
-        return redirect()->route('todos.index')->with('SUCCESS',__("Todo Has Been Created Successfully"));
+        return redirect()->route('dashboard')->with('SUCCESS',__("Todo Has Been Created Successfully"));
     }
 
     /**
@@ -90,7 +93,7 @@ class TodoController extends Controller
                 "is_complete" => true
         ]);
         if($todo->update()){
-            return redirect()->route("todos.index")->with("SUCCESS", __("This Task Has Been Completed Successfully"));
+            return redirect()->route("dashboard")->with("SUCCESS", __("This Task Has Been Completed Successfully"));
         }
         return redirect()->back()->withInput("ERROR", __("Failed To Update"));
     }
@@ -122,7 +125,7 @@ class TodoController extends Controller
             ->store('images/todos');
         }
         if($todo->update()){
-            return redirect()->route("todos.index")->with("SUCCESS", __("The Task Has Been Updated Successfully"));
+            return redirect()->route("dashboard")->with("SUCCESS", __("The Task Has Been Updated Successfully"));
         }
         return redirect()->back()->withInput("ERROR", __("Failed To Update"));
     }
