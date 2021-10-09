@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoRequest;
 use App\Models\Todo;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class TodoController extends Controller
@@ -38,22 +41,15 @@ class TodoController extends Controller
      */
     public function store(TodoRequest $request)
     {
-        $validated = $request->validate([
-            'task' => [
-                'required',
-                Rule::unique('todos'),
-                'min:5',
-                'max:255',
-            ]
-        ],[
-            'task.unique' => 'The Task Must Be Unique'
-        ]);
-
+        $path = $request->file('image')->store('images/todos');
+        // if($request->hasFile('image')){
+        //     $path = $request->file('image')->store('images/todos');
+        // }
         
-
         // $todo = Todo::create($request->array());
         $todo = Todo::create([
-            'task' => $request->get('task')
+            'task' => $request->get('task'),
+            'image' => $path,
         ]);
         if(empty($todo)){
             return redirect()->back()->withInput();
@@ -99,9 +95,12 @@ class TodoController extends Controller
      */
     public function update(TodoRequest $request, Todo $todo)
     {
-        if($todo->update([
-            "task" => $request->get("task")
-        ])){
+        $todo->task = $request->get('task');
+        if($request->hasFile('image')){
+            $todo->image = $request->file('image')
+            ->store('images/todos');
+        }
+        if($todo->update()){
             return redirect()->route("todos.index")->with("SUCCESS", __("The Task Has Been Updated Successfully"));
         }
         return redirect()->back()->withInput("ERROR", __("Failed To Update"));
@@ -115,6 +114,12 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
+        $image = $todo->image;
+        if(File::exists($image)){
+            Storage::delete($image);
+            // File::delete($image);
+            // unlink($todo->image);
+        }
         if($todo->delete()){
             return redirect()->back()->with("SUCCESS", __("The Task Has Been Deleted"));
         }

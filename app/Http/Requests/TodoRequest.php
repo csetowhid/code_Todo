@@ -30,7 +30,11 @@ class TodoRequest extends FormRequest
                 Rule::unique('todos')->ignore($this->route('todo')),
                 'min:5',
                 'max:255',
-            ]
+            ],
+            'image' =>[
+                'image:jpg, jpeg, png',
+                'max: 2048',
+            ],
         ];
     }
 
