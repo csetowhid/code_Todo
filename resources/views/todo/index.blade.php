@@ -59,7 +59,9 @@
                           
                         </tbody>
                       </table>
-                    
+                      <div class="my-4">
+                        {{$list->links()}}
+                      </div>
                 </div>
             </div>
         </div>

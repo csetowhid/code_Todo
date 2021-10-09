@@ -19,7 +19,15 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $data['list'] = Todo::all();
+        // $data['list'] = Todo::select(['id','task'])->paginate(2);
+        // $data['list'] = Todo::orderBy('id','desc')->paginate(2);
+        // $data['list'] = Todo::latest()->paginate(2);
+        // $data['list'] = Todo::limit(2)->get();
+        // $data['list'] = Todo::offset(2)->limit(2)->get();
+        // dd($data['list']->toArray());
+        // $data['list']->dd();
+        // $data['list']->dump();
+        $data['list'] = Todo::paginate(2);
         return view('todo.index',$data);
     }
 
