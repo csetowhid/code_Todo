@@ -8,10 +8,10 @@
     <div class="mt-2">
         <x-label for="Category" :value="__('Category')" />
     {{-- <x-input id="task" class="block mt-1 w-full" type="text" name="task" value="{{old('task', isset($todo) ? $todo->task : '')}}" required autofocus /> --}}
-        <select name="category_id">
+        <select name="category_id" class="from-control">
             <option value="">{{__("Select Category")}}</option>
             @foreach ($categories as $id => $value)
-            <option value="{{$id}}">{{$value}}</option>
+            <option class="from-control" value="{{$id}}">{{$value}}</option>
             @endforeach
         </select>
     <p class="text-red-600">{{$errors->first('category_id')}}</p>

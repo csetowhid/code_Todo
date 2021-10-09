@@ -4,10 +4,16 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Task List') }}
       </h2>
+      <div class="flex justify-items-end">
+        <x-button class="ml-4 bg-green-600">
+          <a href="{{route('todos.create')}}">Create Task</a>
+      </x-button>
       <x-button class="ml-4 bg-green-600">
-        <a href="{{route('todos.create')}}">Create Task</a>
+        <a href="{{route('categories.index')}}">Category</a>
     </x-button>
       </div>
+      </div>
+      
     </x-slot>
 
     <div class="py-12">

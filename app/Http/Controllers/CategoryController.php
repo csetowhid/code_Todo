@@ -65,7 +65,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $data['categories'] = $category;
+        return view("category.edit", $data);
     }
 
     /**
@@ -75,9 +76,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $category->name = $request->get('name');
+        if($category->update()){
+            return redirect()->route("categories.index")->with("SUCCESS", __("Category Has Been Updated Successfully"));
+        }
+        return redirect()->back()->withInput("ERROR", __("Failed To Update"));
     }
 
     /**
@@ -88,6 +93,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if($category->delete()){
+            return redirect()->back()->with("SUCCESS", __("Category Has Been Deleted"));
+        }
+            return redirect()->back()->with("ERROR", __("Failed To Delete"));
     }
 }
