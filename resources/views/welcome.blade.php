@@ -52,11 +52,9 @@
                             <div class="flex items-center">
                                 <div class="ml-4 text-lg leading-7 font-semibold">
                                     @auth
-                                    <a 
-                                    href="{{route('todos.show',$blog->id)}}" class="text-gray-900 dark:text-white">{{$blog->task}}</a>
+                                    <a href="{{route('todos.show',$blog->id)}}" class="text-gray-900 dark:text-white">{{$blog->task}}</a>
                                     @else
                                     <a href="{{route('login')}}" class="text-gray-900 dark:text-white">{{$blog->task}}</a>
-                                 
                                     @endauth
                                         {{-- <a href="{{route('todos.show',$blog->id)}}"
                                         class="text-gray-900 dark:text-white">{{$blog->task}}</a> --}}
