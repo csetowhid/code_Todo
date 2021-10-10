@@ -23,6 +23,7 @@ class TodoController extends Controller
      */
     public function index()
     {
+        /*---------------------------------------------------------
         // $data['list'] = Todo::select(['id','task'])->paginate(2);
         // $data['list'] = Todo::orderBy('id','desc')->paginate(2);
         // $data['list'] = Todo::latest()->paginate(2);
@@ -33,6 +34,8 @@ class TodoController extends Controller
         // $data['list']->dump();
         // $data['list'] = Todo::withTrashed()->paginate(2);
         // $data['list'] = Todo::onlyTrashed()->paginate();
+
+        .................................*/
 
         $data['list'] = Todo::with('Categories')->paginate(5);
         $data['users'] = User::count('id');
