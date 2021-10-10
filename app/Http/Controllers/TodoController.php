@@ -164,7 +164,7 @@ class TodoController extends Controller
     {
         $image = $todo->image;
         if(File::exists($image)){
-            // Storage::delete($image);
+            Storage::delete($image);
             // File::delete($image);
             // unlink($todo->image);
         }
