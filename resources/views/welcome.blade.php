@@ -51,7 +51,17 @@
                         @foreach ($blogs as $blog)
                         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                             <div class="flex items-center">
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="#" class="text-gray-900 dark:text-white">{{$blog->task}}</a></div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    @auth
+                                    <a 
+                                    href="{{route('todos.show',$blog->id)}}" class="text-gray-900 dark:text-white">{{$blog->task}}</a>
+                                    @else
+                                    <a href="{{route('login')}}" class="text-gray-900 dark:text-white">{{$blog->task}}</a>
+                                 
+                                    @endauth
+                                        {{-- <a href="{{route('todos.show',$blog->id)}}"
+                                        class="text-gray-900 dark:text-white">{{$blog->task}}</a> --}}
+                                </div>
                             </div>
                             <div class="grid md:grid-cols-2">
                                 <div>

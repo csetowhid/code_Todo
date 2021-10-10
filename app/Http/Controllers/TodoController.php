@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +34,11 @@ class TodoController extends Controller
         // $data['list'] = Todo::withTrashed()->paginate(2);
         // $data['list'] = Todo::onlyTrashed()->paginate();
 
-        $data['list'] = Todo::with('Categories')->paginate(10);
+        $data['list'] = Todo::with('Categories')->paginate(5);
+        $data['users'] = User::count('id');
+        $data['todos'] = Todo::count('id');
+        $data['categories'] = Category::count('id');
+        $data['comments'] = Comment::count('id');
         return view('todo.index',$data);
     }
 
@@ -121,6 +128,17 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
+
+    public function show(Todo $todo)
+    {
+        $data['todo']=$todo;
+        $data['comments']= Comment::where('todos_id',$todo->id)
+                        // ->where('auth_id', Auth::id())
+                        ->get();
+        return view("comment.create", $data);
+    }
+
+
     public function update(TodoRequest $request, Todo $todo)
     {
         $todo->task = $request->get('task');

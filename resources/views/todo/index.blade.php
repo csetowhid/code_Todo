@@ -1,5 +1,53 @@
 <x-app-layout>
     <x-slot name="header">
+      <!-------------------------------------------------------------->
+            <div class="grid grid-cols-1 md:grid-cols-4 mb-5">
+                <div class="p-3 mx-1 bg-green-500">
+                    <h1 class="text-white text-3xl text-center">Total User</h1>
+                        <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                          <h1 class="text-white text-2xl text-center">
+                            @isset($users)
+                              {{$users}}
+                            @endisset
+                          </h1>
+                        </div>
+                </div>
+
+                <div class="p-3 mx-1 bg-red-500">
+                  <h1 class="text-white text-3xl text-center">Total Task</h1>
+                  <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                    <h1 class="text-white text-2xl text-center">
+                      @isset($todos)
+                        {{$todos}}
+                      @endisset
+                    </h1>
+                  </div>
+                </div>
+
+                <div class="p-3 mx-1 bg-gray-500">
+                  <h1 class="text-white text-3xl text-center">Total Category</h1>
+                  <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                    <h1 class="text-white text-xl text-center">
+                      @isset($categories)
+                        {{$categories}}
+                      @endisset
+                    </h1>
+                  </div>
+                </div>
+
+                <div class="p-3 mx-1 bg-yellow-200">
+                  <h1 class="text-white text-4xl text-center">Total Comments</h1>
+                  <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                    <h1 class="text-white text-2xl text-center">
+                      @isset($comments)
+                        {{$comments}}
+                      @endisset
+                    </h1>
+                  </div>
+                </div>
+            </div>
+
+      <!-------------------------------------------------------------->
       <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Task List') }}
