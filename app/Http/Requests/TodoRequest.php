@@ -31,6 +31,10 @@ class TodoRequest extends FormRequest
                 'min:5',
                 'max:255',
             ],
+            'description' => [
+                'min:5',
+                'max:255',
+            ],
             'image' =>[
                 'image:jpg, jpeg, png',
                 'max: 2048',

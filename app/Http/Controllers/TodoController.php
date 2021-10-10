@@ -31,7 +31,7 @@ class TodoController extends Controller
         // $data['list'] = Todo::withTrashed()->paginate(2);
         // $data['list'] = Todo::onlyTrashed()->paginate();
 
-        $data['list'] = Todo::paginate(2);
+        $data['list'] = Todo::with('Category')->paginate(2);
         return view('todo.index',$data);
     }
 
@@ -54,10 +54,10 @@ class TodoController extends Controller
      */
     public function store(TodoRequest $request)
     {
-        
-        // if($request->hasFile('image')){
-        //     $path = $request->file('image')->store('images/todos');
-        // }
+        $path = "";
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('images/todos');
+        }
         
         // $todo = Todo::create($request->array());
 
@@ -69,10 +69,11 @@ class TodoController extends Controller
         //     'is_complete' =>true
         // ]);
         /*---------------------------*/
-        $path = $request->file('image')->store('images/todos');
+        // $path = $request->file('image')->store('images/todos');
         $todo = Todo::create([
             'category_id' => $request->get('category_id'),
             'task' => $request->get('task'),
+            'description' => $request->get('description'),
             'image' => $path,
         ]);
         if(empty($todo)){
@@ -107,6 +108,7 @@ class TodoController extends Controller
     public function edit(Todo $todo)
     {
         $data['todo'] = $todo;
+        $data['categories'] = Category::pluck('name','id');
         return view("todo.edit", $data);
     }
 
@@ -120,6 +122,7 @@ class TodoController extends Controller
     public function update(TodoRequest $request, Todo $todo)
     {
         $todo->task = $request->get('task');
+        $todo->description = $request->get('description');
         if($request->hasFile('image')){
             $todo->image = $request->file('image')
             ->store('images/todos');

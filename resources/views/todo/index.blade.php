@@ -26,6 +26,7 @@
                           <tr class="text-md text-center font-semibold tracking-wide text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                             <th class="px-4 py-3">Id</th>
                             <th class="px-4 py-3">Task</th>
+                            <th class="px-4 py-3">Category</th>
                             <th class="px-4 py-3">Image</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Action</th>
@@ -36,6 +37,7 @@
                           <tr class="text-center text-gray-700">
                             <td class="px-4 py-3 border">{{$todo->id}}</td>
                             <td class="px-4 py-3 text-ms font-semibold border">{{$todo->task}}</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">{{$todo->Category->name}}</td>
                             <td class="px-4 py-3 text-ms font-semibold border">
                               <img class="mx-auto" width="60" src="{{asset($todo->image)}}" alt="">
                             </td>

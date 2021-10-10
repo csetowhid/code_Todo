@@ -5,6 +5,14 @@
     <p class="text-red-600">{{$errors->first('task')}}</p>
     </div>
 
+    <div class="mt-4">
+        <x-label for="Description" :value="__('Description')" />
+        <textarea class="form-textarea mt-1 block w-full" name="description" value="{{old('description', isset($todo) ? $todo->description : '')}}" rows="3" placeholder="Enter Your Text.">
+            {{ isset($todo) ? $todo->description: ''}}</textarea>
+</label>
+    <p class="text-red-600">{{$errors->first('task')}}</p>
+    </div>
+
     <div class="mt-2">
         <x-label for="Category" :value="__('Category')" />
     {{-- <x-input id="task" class="block mt-1 w-full" type="text" name="task" value="{{old('task', isset($todo) ? $todo->task : '')}}" required autofocus /> --}}
