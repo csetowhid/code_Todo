@@ -16,11 +16,10 @@ class Todo extends Model
         'image',
         'description',
         'is_complete',
-        'category_id',
     ];
 
-    public function Category()
+    public function Categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 }

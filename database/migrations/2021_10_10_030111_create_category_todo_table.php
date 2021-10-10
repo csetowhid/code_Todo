@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCategoryIdToTodosTable extends Migration
+class CreateCategoryTodoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,19 @@ class AddCategoryIdToTodosTable extends Migration
      */
     public function up()
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id')->after('id');
+        Schema::create('category_todo', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('todo_id');
+            $table->timestamps();
+
+            $table->unique(['todo_id','category_id']);
+
+
+            $table->foreign('todo_id')
+            ->references('id')
+            ->on('todos')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
 
             $table->foreign('category_id')
             ->references('id')
@@ -31,9 +42,6 @@ class AddCategoryIdToTodosTable extends Migration
      */
     public function down()
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->dropForeign('todos_category_id_foreign');
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('category_todo');
     }
 }

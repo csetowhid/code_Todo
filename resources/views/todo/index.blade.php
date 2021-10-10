@@ -17,7 +17,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
@@ -37,7 +37,10 @@
                           <tr class="text-center text-gray-700">
                             <td class="px-4 py-3 border">{{$todo->id}}</td>
                             <td class="px-4 py-3 text-ms font-semibold border">{{$todo->task}}</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">{{$todo->Category->name}}</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">
+                              {{$todo->Categories->pluck('name')->join(', ')}}
+                         
+                            </td>
                             <td class="px-4 py-3 text-ms font-semibold border">
                               <img class="mx-auto" width="60" src="{{asset($todo->image)}}" alt="">
                             </td>

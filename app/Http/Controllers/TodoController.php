@@ -31,7 +31,7 @@ class TodoController extends Controller
         // $data['list'] = Todo::withTrashed()->paginate(2);
         // $data['list'] = Todo::onlyTrashed()->paginate();
 
-        $data['list'] = Todo::with('Category')->paginate(2);
+        $data['list'] = Todo::with('Categories')->paginate(10);
         return view('todo.index',$data);
     }
 
@@ -71,7 +71,7 @@ class TodoController extends Controller
         /*---------------------------*/
         // $path = $request->file('image')->store('images/todos');
         $todo = Todo::create([
-            'category_id' => $request->get('category_id'),
+            // 'category_id' => $request->get('category_id'),
             'task' => $request->get('task'),
             'description' => $request->get('description'),
             'image' => $path,
@@ -79,6 +79,8 @@ class TodoController extends Controller
         if(empty($todo)){
             return redirect()->back()->withInput();
         }
+        $todo->categories()
+        ->attach($request->get('categories'));
         return redirect()->route('dashboard')->with('SUCCESS',__("Todo Has Been Created Successfully"));
     }
 
@@ -128,6 +130,7 @@ class TodoController extends Controller
             ->store('images/todos');
         }
         if($todo->update()){
+            $todo->categories()->sync($request->get('categories'));
             return redirect()->route("dashboard")->with("SUCCESS", __("The Task Has Been Updated Successfully"));
         }
         return redirect()->back()->withInput("ERROR", __("Failed To Update"));

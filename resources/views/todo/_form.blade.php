@@ -7,22 +7,22 @@
 
     <div class="mt-4">
         <x-label for="Description" :value="__('Description')" />
-        <textarea class="form-textarea mt-1 block w-full" name="description" value="{{old('description', isset($todo) ? $todo->description : '')}}" rows="3" placeholder="Enter Your Text.">
-            {{ isset($todo) ? $todo->description: ''}}</textarea>
+        <textarea class="form-textarea mt-1 block w-full" name="description" value="{{old('description')}}" rows="3">
+            @isset($todo){{$todo->description}} @endisset</textarea>
 </label>
     <p class="text-red-600">{{$errors->first('task')}}</p>
     </div>
 
     <div class="mt-2">
         <x-label for="Category" :value="__('Category')" />
-    {{-- <x-input id="task" class="block mt-1 w-full" type="text" name="task" value="{{old('task', isset($todo) ? $todo->task : '')}}" required autofocus /> --}}
-        <select name="category_id" class="from-control">
+        <select name="categories[]" class="form-multiselect block w-full mt-1" multiple>
             <option value="">{{__("Select Category")}}</option>
             @foreach ($categories as $id => $value)
-            <option class="from-control" value="{{$id}}">{{$value}}</option>
+        <option @isset($todo){{$todo->Categories->firstWhere("name", $value) ? 'selected=true' : ''}}
+            @endisset  value="{{$id}}">{{$value}}</option>
             @endforeach
         </select>
-    <p class="text-red-600">{{$errors->first('category_id')}}</p>
+    <p class="text-red-600">{{$errors->first('categories')}}</p>
     </div>
 
     <div class="mt-2 w-80">
