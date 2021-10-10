@@ -45,7 +45,6 @@
                         </g>
                     </svg>
                 </div>
-
                 <div class="mt-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 space-x-4">
                         @foreach ($blogs as $blog)
@@ -79,8 +78,6 @@
                 <div class="my-4">
                     {{$blogs->links()}}
                   </div>
-
-                
             </div>
         </div>
     </body>
