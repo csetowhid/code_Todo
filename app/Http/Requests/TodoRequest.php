@@ -45,7 +45,11 @@ class TodoRequest extends FormRequest
     public function messages()
     {
         return [
-            'task.unique' => 'The Task Must Be Unique'
+            'task.unique' => 'The Task Must Be Unique',
+            'task.unique' => array(
+                'messege' => 'Successfully Subject Add !!!',
+                'alert-type' => 'success'
+            )
         ];
     }
 }

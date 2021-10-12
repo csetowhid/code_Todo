@@ -77,12 +77,20 @@ class TodoController extends Controller
         // ]);
         /*---------------------------*/
         // $path = $request->file('image')->store('images/todos');
+
+        // $todo['task'] = $request->get('task');
+        // $todo['user_id'] = Auth::id();
+        // $todo['description'] = $request->get('description');
+        // $todo['image'] = $path;
         $todo = Todo::create([
             // 'category_id' => $request->get('category_id'),
+            'user_id' => Auth::id(),
             'task' => $request->get('task'),
             'description' => $request->get('description'),
             'image' => $path,
         ]);
+
+
         if(empty($todo)){
             return redirect()->back()->withInput();
         }
@@ -133,7 +141,7 @@ class TodoController extends Controller
     {
         $data['todo']=$todo;
         $data['comments']= Comment::where('todos_id',$todo->id)
-                        // ->where('auth_id', Auth::id())
+                        ->where('auth_id', Auth::id())
                         ->get();
         return view("comment.create", $data);
     }
@@ -164,7 +172,7 @@ class TodoController extends Controller
     {
         $image = $todo->image;
         if(File::exists($image)){
-            Storage::delete($image);
+           $delete =  Storage::delete($image);
             // File::delete($image);
             // unlink($todo->image);
         }

@@ -15,7 +15,7 @@
 
     <div class="mt-2">
         <x-label for="Category" :value="__('Category')" />
-        <select name="categories[]" class="form-multiselect block w-full mt-1" multiple>
+        <select name="categories[]" class="mt-1" multiple="true">
             <option value="">{{__("Select Category")}}</option>
             @foreach ($categories as $id => $value)
         <option @isset($todo){{$todo->Categories->firstWhere("name", $value) ? 'selected=true' : ''}}
